@@ -3190,6 +3190,15 @@ bool venc_dev::venc_empty_buf(void *buffer, void *pmem_data_buf, unsigned index,
                     }
                     if (usage & private_handle_t::PRIV_FLAGS_ITU_R_709) {
                         buf.flags = V4L2_MSM_BUF_FLAG_YUV_601_709_CLAMP;
+                        //Set VPE Color space conversion only if 601_to_709 flag is enabled.
+                        if (!streaming[OUTPUT_PORT]) {
+                            struct v4l2_control control;
+                            control.id = V4L2_CID_MPEG_VIDC_VIDEO_VPE_CSC;
+                            control.value = V4L2_CID_MPEG_VIDC_VIDEO_VPE_CSC_ENABLE;
+                            if (ioctl(m_nDriver_fd, VIDIOC_S_CTRL, &control)) {
+                                DEBUG_PRINT_ERROR("Failed to set VPE CSC for 601_to_709");
+                            }
+                        }
                     }
 
                     if (!streaming[OUTPUT_PORT] && !(m_sVenc_cfg.inputformat == V4L2_PIX_FMT_RGB32 ||
