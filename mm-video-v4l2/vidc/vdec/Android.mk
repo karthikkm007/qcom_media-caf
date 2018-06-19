@@ -65,8 +65,8 @@ endif
 include $(CLEAR_VARS)
 
 # Common Includes
-libmm-vdec-inc          := $(LOCAL_PATH)/inc
 libmm-vdec-inc          += $(OMX_VIDEO_PATH)/vidc/common/inc
+libmm-vdec-inc          := $(LOCAL_PATH)/inc
 libmm-vdec-inc          += $(TOP)/$(call project-path-for,qcom-media)/mm-core/inc
 libmm-vdec-inc          += $(TARGET_OUT_HEADERS)/qcom/display
 libmm-vdec-inc          += $(TARGET_OUT_HEADERS)/adreno
